@@ -2,15 +2,17 @@ local BasePlugin = require "kong.plugins.base_plugin"
 local basic_serializer = require "kong.plugins.log-serializers.basic"
 local statsd_logger = require "kong.plugins.statsd.statsd_logger"
 
+local ngx_log      = ngx.log
+local ngx_timer_at = ngx.timer.at
+local string_gsub  = string.gsub
+local pairs        = pairs
+local NGX_ERR      = ngx.ERR
+
+
 local StatsdHandler = BasePlugin:extend()
 
 StatsdHandler.PRIORITY = 1
 
-local ngx_log = ngx.log
-local ngx_timer_at = ngx.timer.at
-local string_gsub = string.gsub
-local pairs = pairs
-local NGX_ERR = ngx.ERR
 
 local function allow_user_metric(message, identifier)
   if message.consumer ~= nil and
@@ -19,6 +21,7 @@ local function allow_user_metric(message, identifier)
   end
   return false
 end
+
 
 local gauges = {
   gauge = function (stat_name, stat_value, metric_config, logger)
@@ -127,9 +130,11 @@ local function log(premature, conf, message)
   logger:close_socket()
 end
 
+
 function StatsdHandler:new()
   StatsdHandler.super.new(self, "statsd")
 end
+
 
 function StatsdHandler:log(conf)
   StatsdHandler.super.log(self)
