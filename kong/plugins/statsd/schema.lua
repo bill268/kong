@@ -1,78 +1,79 @@
 local metrics = {
-  ["request_count"] = true,
-  ["latency"] = true,
-  ["request_size"] = true,
-  ["status_count"] = true,
-  ["response_size"] = true,
-  ["unique_users"] = true,
-  ["request_per_user"] = true,
-  ["upstream_latency"] = true,
-  ["kong_latency"] = true,
-  ["status_count_per_user"] = true
+  ["request_count"]         = true,
+  ["latency"]               = true,
+  ["request_size"]          = true,
+  ["status_count"]          = true,
+  ["response_size"]         = true,
+  ["unique_users"]          = true,
+  ["request_per_user"]      = true,
+  ["upstream_latency"]      = true,
+  ["kong_latency"]          = true,
+  ["status_count_per_user"] = true,
 }
 
+
 local stat_types = {
-  ["gauge"] = true,
-  ["timer"] = true,
-  ["counter"] = true,
+  ["gauge"]     = true,
+  ["timer"]     = true,
+  ["counter"]   = true,
   ["histogram"] = true,
-  ["meter"] = true,
-  ["set"] = true
+  ["meter"]     = true,
+  ["set"]       = true,
 }
 
 local consumer_identifiers = {
   ["consumer_id"] = true,
-  ["custom_id"] = true,
-  ["username"] = true
+  ["custom_id"]   = true,
+  ["username"]    = true,
 }
 
 local default_metrics = {
   {
-    name = "request_count",
-    stat_type = "counter",
-    sample_rate = 1
-  },
-  {
-    name = "latency",
-    stat_type = "timer"
-  },
-  {
-    name = "request_size",
-    stat_type = "timer"
-  },
-  {
-    name = "status_count",
-    stat_type = "counter",
-    sample_rate = 1
-  },
-  {
-    name = "response_size",
-    stat_type = "timer"
-  },
-  {
-    name = "unique_users",
-    stat_type = "set",
-    consumer_identifier = "custom_id"
-  },
-  {
-    name = "request_per_user",
-    stat_type = "counter",
+    name        = "request_count",
+    stat_type   = "counter",
     sample_rate = 1,
-    consumer_identifier = "custom_id"
   },
   {
-    name = "upstream_latency",
-    stat_type = "timer"
+    name      = "latency",
+    stat_type = "timer",
   },
   {
-    name = "kong_latency",
-    stat_type = "timer"
+    name      = "request_size",
+    stat_type = "timer",
   },
   {
-    name = "status_count_per_user",
-    stat_type = "counter",
+    name        = "status_count",
+    stat_type   = "counter",
     sample_rate = 1,
-    consumer_identifier = "custom_id"
+  },
+  {
+    name      = "response_size",
+    stat_type = "timer"
+  },
+  {
+    name                = "unique_users",
+    stat_type           = "set",
+    consumer_identifier = "custom_id",
+  },
+  {
+    name        = "request_per_user",
+    stat_type   = "counter",
+    sample_rate = 1,
+    consumer_identifier = "custom_id",
+  },
+  {
+    name      = "upstream_latency",
+    stat_type = "timer",
+  },
+  {
+    name      = "kong_latency",
+    stat_type = "timer",
+  },
+  {
+    name                = "status_count_per_user",
+    stat_type           = "counter",
+    sample_rate         = 1,
+    consumer_identifier = "custom_id",
   }
 }
 
@@ -128,13 +129,13 @@ end
 
 return {
   fields = {
-    host = { required = true, type = "string", default = "localhost" },
-    port = { required = true, type = "number", default = 8125 },
+    host    = { required = true, type = "string", default = "localhost" },
+    port    = { required = true, type = "number", default = 8125 },
     metrics = {
-      type = "array",
+      type     = "array",
       required = true,
-      default = default_metrics,
-      func = check_schema
-    }
+      default  = default_metrics,
+      func     = check_schema,
+    },
   }
 }
